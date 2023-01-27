@@ -19,13 +19,13 @@ def values(message: telebot.types.Message):
     bot.reply_to(message, text)
 
 
-@bot.message_handler(content_types=['text', ])
+@bot.message_handler(content_types=['text'])
 def convert(message: telebot.types.Message):
     try:
         values = message.text.split(' ')
 
-        """if len(values) != 3:
-            raise ConvertionExсeption('Должно быть 3 параметра, например:\nдоллар рубль 500 ')"""
+        if len(values) != 3:
+            raise ConvertionException('Должно быть 3 параметра, например:\nдоллар рубль 500 ')
 
         quote, base, amount = values
         total_base = CryptoConverter.convert(quote, base, amount)
