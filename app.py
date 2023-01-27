@@ -3,7 +3,6 @@ from config import*
 import telebot
 import traceback
 
-# Обрабатываются все сообщения содержащие команды '/start' or '/help'.
 @bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
     text = 'Приветствую вас мои повелители ☺!\nВведите команду боту в следующем формате:\n<имя валюты> ' \
@@ -28,6 +27,11 @@ def convert(message: telebot.types.Message):
             raise ConvertionException('Должно быть 3 параметра, например:\nдоллар рубль 500 ')
 
         quote, base, amount = values
+
+        # Если пользователь ввел буквы в разном регистре, то приравниваем в нижний
+        quote = str.lower(quote)
+        base = str.lower(base)
+
         total_base = CryptoConverter.convert(quote, base, amount)
 
     except ConvertionException as e:
